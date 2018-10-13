@@ -43,19 +43,99 @@
     roslaunch robot_recorder_example demo.launch 
     # Open another terminal
     rosrun robot_recorder_example and_action.py _record:=True
+    # Find file at: ~/.ros/recording-<DATE>.json
     ```
     or  
     `(manual - with RViz plugin)`  
     TODO
-1. Create 3d web animation
+1. Create 3d web animation  
 
-    Follow _Create new page for your animation_ of https://github.com/ipa-jfh/urdf-animation
+    (In record_trajectory/docs_FINAL/ one can find the final files)
+    ```bash
+    # Download nodejs/npm from https://nodejs.org/en/
+    cd ~/record_ws/src/robot_recorder_tutorials
+    gedit .gitignore
+    # Add if not existing in a new line "node_modules/" (without quotes) 
+    cd ~/record_ws/src/robot_recorder_tutorials/record_trajectory
+    mkdir docs && cd docs
+    gedit package.json
+    # Insert content from below
+    npm install
+    cp ./node_modules/animation/template/* .
+    mkdir static
+    cp ../node_modules/gif.js/dist/gif.worker.js .
+    # Move your recorded file to this folder
+    mv ~/.ros/recording-<DATE>.json static/recording.json # Hint: <Tab> the date
+    # Create the urdf
+    rosrun xacro xacro --inorder -o static/ur5_with_cam.urdf ../urdf/robot.xacro
+
+    # Modify config.js
+    gedit config.js
+    # Add the content from below (Modifications in `config.js`)
+
+    firefox includes.html # YOU SHOULD SEE THE WEB 3D ANIMATION!
+    ```
+    `package.json`:
+    ```json
+    {
+        "name": "record_trajectory",
+        "version": "1.0.0",
+        "description": "Record trajectory tutorial",
+        "scripts": {
+            "start": "webpack-dev-server",
+            "build": " webpack"
+        },
+        "author": "TODO",
+        "license": "Apache-2.0",
+        "dependencies": {
+            "urdf-animation": "^0.3.0"
+        },
+        "devDependencies": {
+            "eslintrc": "^1.0.6"
+        }
+    }
+    ```
+    Modifications in `config.js`:
+    ```js
+
+    // Change addURDF to
+    vw.addURDF({
+        // https://github.com/gkjohnson/urdf-loaders
+        urdf: './static/ur5_with_cam.urdf',
+        packagesContainingMeshes: [
+            'ur_description: https://raw.githubusercontent.com/ros-industrial/universal_robot/kinetic-devel/ur_description',
+            'openni_description: https://raw.githubusercontent.com/ros-drivers/openni_camera/indigo-devel/openni_description'
+        ]
+    });
+    // ...
+    // Change camera to
+    vw.setCamera({
+        // https://threejs.org/docs/#api/en/cameras/PerspectiveCamera
+        fov: 7,
+        position: [0, 2, -10]
+    });
+    // ...
+    // Change light position to
+    // position: [60, 100, 50],
+    ```
+
 1. Create GIF
 
     Press _Record recording_ at control-box in upper right corner.  
     Set _quality_ (lower is better) and _speed_ and then press _record()_.  
     Done.  
 
+1. To publish the web animation you have to bundle the js files first
+    ```bash
+    cd ~/record_ws/src/robot_recorder_tutorials/record_trajectory/docs
+    npm install webpack webpack-cli --save-dev
+    npm run build # Might show errors which should be fine
+    firefox index.html # test if it works
+    # Now upload the docs/ folder containing at least
+    # the folder static/ and the files index.html and index.bundle.js 
+    # to your repo.   
+    ```
+    Finally [enable gh-pages](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/) for the docs folder.
 
 
 

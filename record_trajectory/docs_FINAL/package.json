@@ -1,0 +1,17 @@
+{
+    "name": "record_trajectory",
+    "version": "1.0.0",
+    "description": "Record trajectory tutorial",
+    "scripts": {
+        "start": "webpack-dev-server",
+        "build": " webpack"
+    },
+    "author": "TODO",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "urdf-animation": "^0.3.0"
+    },
+    "devDependencies": {
+        "eslintrc": "^1.0.6"
+    }
+}
