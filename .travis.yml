@@ -1,0 +1,15 @@
+sudo: required
+dist: trusty
+language: generic
+env:
+  global:
+    - UPSTREAM_WORKSPACE=file
+    - ROSINSTALL_FILENAME=.rosinstall
+    - ADDITIONAL_DEBS="pkg-config"
+    - CATKIN_CONFIG="--no-install"
+  matrix:
+    - ROS_DISTRO=kinetic ROS_REPO=ros
+install:
+  - git clone --depth=1 https://github.com/ros-industrial/industrial_ci.git .ci_config
+script:
+  - .ci_config/travis.sh

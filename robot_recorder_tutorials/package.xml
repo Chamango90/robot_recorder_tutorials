@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package>
+  <name>robot_recorder_tutorials</name>
+  <version>1.0.0</version>
+  <description>Meta package that contains all essential packages for the robot recorder.</description>
+
+  <author email="jonathan.hechtbauer@ipa.fraunhofer.de">Jonathan Hechtbauer</author>
+  <maintainer email="jonathan.hechtbauer@ipa.fraunhofer.de">Jonathan Hechtbauer</maintainer>
+
+  <license>BSD</license>
+
+  <run_depend>record_trajectory</run_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>
