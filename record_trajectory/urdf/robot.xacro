@@ -1,16 +1,10 @@
 <?xml version="1.0" ?>
-<robot name="robot" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="ur5" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:include filename="$(find ur_description)/urdf/common.gazebo.xacro" />
   <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
 
   <xacro:ur5_robot prefix="" joint_limited="false"/>
-
-  <link name="world" />
-  <joint name="world_joint" type="fixed">
-    <parent link="world" />
-    <child link = "base_link" />
-  </joint>
 
   <link name="camera">
     <visual>
@@ -19,6 +13,7 @@
       </geometry>
     </visual>
   </link>
+  
   <joint name="camera_joint" type="fixed">
     <parent link="tool0"/>
     <child link="camera"/>
