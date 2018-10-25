@@ -40,9 +40,9 @@
 
     `(auto)`
     ```bash
-    roslaunch robot_recorder_example demo.launch 
+    roslaunch record_trajectory demo.launch
     # Open another terminal
-    rosrun robot_recorder_example and_action.py _record:=True
+    rosrun record_trajectory and_action _record:=True
     # Find file at: ~/.ros/recording-<DATE>.json
     ```
     or  
