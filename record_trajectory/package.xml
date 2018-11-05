@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>record_trajectory</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>The record_trajectory package</description>
   <maintainer email="jonathan.hechtbauer@ipa.fraunhofer.de">Jonathan Hechtbauer</maintainer>
   <license>BSD</license>

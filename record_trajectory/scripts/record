@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+
+import rospy
+from recordit.client import Recorder
+from record_trajectory.move_trajectory import Manipulator
+
+
+def main():
+    rospy.init_node("recorder_example", anonymous=False)
+    robot = Manipulator()
+    robot.move_to_start()
+    with Recorder():
+        robot.move_trajectory()
+        robot.move_to_start()
+
+
+if __name__ == "__main__":
+    main()
+

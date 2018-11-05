@@ -42,7 +42,7 @@
     ```bash
     roslaunch record_trajectory demo.launch
     # Open another terminal
-    rosrun record_trajectory and_action _record:=True
+    rosrun record_trajectory record
     # Find file at: ~/.ros/recording-<DATE>.json
     ```
     or  
