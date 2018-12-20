@@ -61,9 +61,9 @@
     gedit package.json
     # Insert content from below
     npm install
-    cp ./node_modules/animation/template/* .
+    cp ./node_modules/urdf-animation/template/* .
     mkdir static
-    cp ../node_modules/gif.js/dist/gif.worker.js .
+    cp ../node_modules/gif.js/dist/gif.worker.js static/
     # Move your recorded file to this folder
     mv ~/.ros/recording-<DATE>.json static/recording.json # Hint: <Tab> the date
     # Create the urdf
@@ -107,7 +107,15 @@
             'openni_description: https://raw.githubusercontent.com/ros-drivers/openni_camera/indigo-devel/openni_description'
         ]
     });
-    // ...
+
+    // Set animation path
+    vw.addAnimation({
+        // https://github.com/ipa-jfh/urdf-animation
+        animation: './static/recording.json',
+        fading: 0.0,
+        controlGUI: true
+    });
+
     // Change camera to
     vw.setCamera({
         // https://threejs.org/docs/#api/en/cameras/PerspectiveCamera
