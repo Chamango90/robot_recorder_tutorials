@@ -27,13 +27,13 @@
     # Download repositories
     git clone https://github.com/ipa-jfh/robot_recorder_tutorial.git
     wstool init .
-    wstool merge ~/record_ws/src/robot_recorder_tutorial.rosinstall
+    wstool merge ~/record_ws/src/robot_recorder_tutorial/.rosinstall
     wstool up
 
     # Build workspace
     source /opt/ros/kinetic/setup.bash
     rosdep update && rosdep install --from-paths ~/record_ws/src --ignore-src
-    cd catkin build 
+    cd ~/record_ws && catkin build
     source ~/record_ws/devel/setup.bash
     ```
 1. Record example
@@ -42,32 +42,31 @@
     ```bash
     roslaunch record_trajectory demo.launch
     # Open another terminal
+    source ~/record_ws/devel/setup.bash
     rosrun record_trajectory record
     # Find file at: ~/.ros/recording-<DATE>.json
     ```
-    or  
-    `(manual - with RViz plugin)`  
+    or
+    `(manual - with RViz plugin)`
     TODO
-1. Create 3d web animation  
+1. Create 3d web animation
 
     (In record_trajectory/docs_FINAL/ one can find the final files)
     ```bash
     # Download nodejs/npm from https://nodejs.org/en/
-    cd ~/record_ws/src/robot_recorder_tutorials
-    gedit .gitignore
-    # Add if not existing in a new line "node_modules/" (without quotes) 
-    cd ~/record_ws/src/robot_recorder_tutorials/record_trajectory
-    mkdir docs && cd docs
+
+    mkdir -p ~/record_ws/my_animation && cd ~/record_ws/my_animation
+    # NOTE: If you have a .gitignore file, add "node_modules/".
     gedit package.json
-    # Insert content from below
-    npm install
+    # Insert content from below and save it
+    npm install # install npm deps
     cp ./node_modules/urdf-animation/template/* .
     mkdir static
     cp ../node_modules/gif.js/dist/gif.worker.js static/
     # Move your recorded file to this folder
     mv ~/.ros/recording-<DATE>.json static/recording.json # Hint: <Tab> the date
     # Create the urdf
-    rosrun xacro xacro --inorder -o static/ur5_with_cam.urdf ../urdf/robot.xacro
+    rosrun xacro xacro --inorder -o static/model.urdf ~/record_ws/src/robot_recorder_tutorial/record_trajectory/urdf/robot.xacro
 
     # Modify config.js
     gedit config.js
@@ -101,7 +100,7 @@
     // Change addURDF to
     vw.addURDF({
         // https://github.com/gkjohnson/urdf-loaders
-        urdf: './static/ur5_with_cam.urdf',
+        urdf: './static/model.urdf',
         packagesContainingMeshes: [
             'ur_description: https://raw.githubusercontent.com/ros-industrial/universal_robot/kinetic-devel/ur_description',
             'openni_description: https://raw.githubusercontent.com/ros-drivers/openni_camera/indigo-devel/openni_description'
@@ -129,21 +128,18 @@
 
 1. Create GIF
 
-    Press _Record recording_ at control-box in upper right corner.  
-    Set _quality_ (lower is better) and _speed_ and then press _record()_.  
-    Done.  
+    Press _Record recording_ at control-box in upper right corner.
+    Set _quality_ (lower is better) and _speed_ and then press _record()_.
+    Done.
 
 1. To publish the web animation you have to bundle the js files first
     ```bash
     cd ~/record_ws/src/robot_recorder_tutorials/record_trajectory/docs
     npm install webpack webpack-cli --save-dev
     npm run build # Might show errors which should be fine
-    firefox index.html # test if it works
-    # Now upload the docs/ folder containing at least
-    # the folder static/ and the files index.html and index.bundle.js 
-    # to your repo.   
+    firefox index.html # Test if it works
     ```
-    Finally [enable gh-pages](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/) for the docs folder.
+    Finally, upload the animation in your [gh-pages](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
 
 
 
