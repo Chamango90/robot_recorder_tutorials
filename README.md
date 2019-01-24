@@ -7,18 +7,19 @@
 - RecordIt: https://github.com/ipa-jfh/robot_recorder
 - urdf-loader: https://github.com/gkjohnson/urdf-loaders
 - urdf-animation: https://github.com/ipa-jfh/urdf-animation
+- get_urdf_deps: https://github.com/ipa-jfh/get_urdf_deps
 
 ## 1. record_trajectory
 ### Result
-<a href="https://ipa-jfh.github.io/urdf-animation/manipulator_ur5/">
+<a href="https://ipa-jfh.github.io/urdf-animation/manipulator_ur5/result/">
     <img src="https://user-images.githubusercontent.com/17281534/46701301-8f98ac00-cc1f-11e8-8ee1-af82548453d2.gif" width="249" height="211" >
 </a>
 
-[>> See 3D animation](https://ipa-jfh.github.io/urdf-animation/manipulator_ur5/)
+[>> See 3D animation](https://ipa-jfh.github.io/urdf-animation/manipulator_ur5/result/)
 
 ### How to
 
-1. Install example
+1. __Install example__
 
     ```bash
     # Optionally create a new ROS workspace
@@ -36,7 +37,7 @@
     cd ~/record_ws && catkin build
     source ~/record_ws/devel/setup.bash
     ```
-1. Record example
+2. __Record example__
 
     `(auto)`
     ```bash
@@ -49,7 +50,7 @@
     Files are saved to  `~/.ros/test_animation/`
 
 
-1. Create 3d web animation
+3. __Create 3d web animation__
 
     Make sure to download/install nodejs/npm from https://nodejs.org/en/
 
@@ -60,13 +61,13 @@
     npm start
     ```
 
-2. Create GIF
+4. __Create GIF__
 
     In the webpage press _Record recording_ at the control-box in upper right corner.
     Set _quality_ (lower is better) and _speed_ and then press _record()_.
     Done.
 
-3. Publish interactive web animation
+5. __Publish interactive web animation__
 
     To publish the web animation you have to bundle the js files first:
 
