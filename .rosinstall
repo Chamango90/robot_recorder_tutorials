@@ -1,2 +1,3 @@
 - git: {local-name: robot_recorder, uri: 'https://github.com/ipa-jfh/robot_recorder.git'}
+- git: {local-name: get_urdf_deps, uri: 'https://github.com/ipa-jfh/get_urdf_deps.git'}
 - git: {local-name: openni_camera, uri: 'https://github.com/ros-drivers/openni_camera'}

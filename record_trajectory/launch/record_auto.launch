@@ -1,0 +1,20 @@
+<launch>
+
+  <arg name="path" default="test_animation"/> <!-- if relavtive saved in ~/.ros/ -->
+  <arg name="sub_path" default="/result/static"/>
+
+  <include file="$(find record_trajectory)/launch/bringup.launch">
+    <arg name="path" value="$(arg path)$(arg sub_path)"/>
+  </include>
+
+  <include file="$(find get_urdf_deps)/launch/get_urdf_and_deps.launch">
+    <arg name="path" value="$(arg path)"/>
+    <arg name="sub_path" value="$(arg sub_path)"/>
+    <arg name="save_urdf" value="true"/>
+    <arg name="save_mesh_deps" value="true"/>
+    <arg name="create_def_proj" value="true"/>
+  </include>
+
+  <node pkg="record_trajectory" type="record" name="record" required="true"/>
+
+</launch>

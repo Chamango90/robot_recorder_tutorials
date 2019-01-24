@@ -40,106 +40,43 @@
 
     `(auto)`
     ```bash
-    roslaunch record_trajectory demo.launch
-    # Open another terminal
-    source ~/record_ws/devel/setup.bash
-    rosrun record_trajectory record
-    # Find file at: ~/.ros/recording-<DATE>.json
+    roslaunch record_trajectory record_auto.launch
     ```
     or
     `(manual - with RViz plugin)`
     TODO
+
+    Files are saved to  `~/.ros/test_animation/`
+
+
 1. Create 3d web animation
 
-    (In record_trajectory/docs_FINAL/ one can find the final files)
+    Make sure to download/install nodejs/npm from https://nodejs.org/en/
+
     ```bash
-    # Download nodejs/npm from https://nodejs.org/en/
-
-    mkdir -p ~/record_ws/my_animation && cd ~/record_ws/my_animation
-    # NOTE: If you have a .gitignore file, add "node_modules/".
-    gedit package.json
-    # Insert content from below and save it
-    npm install # install npm deps
-    cp ./node_modules/urdf-animation/template/* .
-    mkdir static
-    cp ../node_modules/gif.js/dist/gif.worker.js static/
-    # Move your recorded file to this folder
-    mv ~/.ros/recording-<DATE>.json static/recording.json # Hint: <Tab> the date
-    # Create the urdf
-    rosrun xacro xacro --inorder -o static/model.urdf ~/record_ws/src/robot_recorder_tutorial/record_trajectory/urdf/robot.xacro
-
-    # Modify config.js
-    gedit config.js
-    # Add the content from below (Modifications in `config.js`)
-
-    firefox includes.html # YOU SHOULD SEE THE WEB 3D ANIMATION!
-    ```
-    `package.json`:
-    ```json
-    {
-        "name": "record_trajectory",
-        "version": "1.0.0",
-        "description": "Record trajectory tutorial",
-        "scripts": {
-            "start": "webpack-dev-server",
-            "build": " webpack"
-        },
-        "author": "TODO",
-        "license": "Apache-2.0",
-        "dependencies": {
-            "urdf-animation": "^0.3.0"
-        },
-        "devDependencies": {
-            "eslintrc": "^1.0.6"
-        }
-    }
-    ```
-    Modifications in `config.js`:
-    ```js
-
-    // Change addURDF to
-    vw.addURDF({
-        // https://github.com/gkjohnson/urdf-loaders
-        urdf: './static/model.urdf',
-        packagesContainingMeshes: [
-            'ur_description: https://raw.githubusercontent.com/ros-industrial/universal_robot/kinetic-devel/ur_description',
-            'openni_description: https://raw.githubusercontent.com/ros-drivers/openni_camera/indigo-devel/openni_description'
-        ]
-    });
-
-    // Set animation path
-    vw.addAnimation({
-        // https://github.com/ipa-jfh/urdf-animation
-        animation: './static/recording.json',
-        fading: 0.0,
-        controlGUI: true
-    });
-
-    // Change camera to
-    vw.setCamera({
-        // https://threejs.org/docs/#api/en/cameras/PerspectiveCamera
-        fov: 7,
-        position: [0, 2, -10]
-    });
-    // ...
-    // Change light position to
-    // position: [60, 100, 50],
+    cd ~/.ros/test_animation/
+    npm install # install all deps of the npm project
+    cp -r ./node_modules/urdf-animation/template/* .
+    npm start
     ```
 
-1. Create GIF
+2. Create GIF
 
-    Press _Record recording_ at control-box in upper right corner.
+    In the webpage press _Record recording_ at the control-box in upper right corner.
     Set _quality_ (lower is better) and _speed_ and then press _record()_.
     Done.
 
-1. To publish the web animation you have to bundle the js files first
+3. Publish interactive web animation
+
+    To publish the web animation you have to bundle the js files first:
+
     ```bash
-    cd ~/record_ws/src/robot_recorder_tutorials/record_trajectory/docs
-    npm install webpack webpack-cli --save-dev
+    cd ~/.ros/test_animation/
     npm run build # Might show errors which should be fine
-    firefox index.html # Test if it works
+    firefox ~/.ros/test_animation/result/index.html # test
     ```
-    Finally, upload the animation in your [gh-pages](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
+
+    The folder `./result` has the self-contained webpage, which you can host e.g. on [gh-pages](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
 
 
 

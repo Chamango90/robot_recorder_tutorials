@@ -1,8 +1,11 @@
 <launch>
+  <arg name="path" default=""/>
+  <arg name="filename" default="recording.json"/>
 
   <include file="$(find recordit)/launch/record.launch">
-    <arg name="manual" default="true" />
-  </include>
+    <arg name="manual" value="true" />
+    <arg name="path" value="$(arg path)/$(arg filename)"/>
+   </include>
 
   <arg name="limited" default="true"/>
   <!-- Load the URDF -->
@@ -31,8 +34,7 @@
   </include>
 
   <!-- Run Rviz and load the default config to see the state of the move_group node -->
-  <include file="$(find ur5_moveit_config)/launch/moveit_rviz.launch">
-    <arg name="config" value="true"/>
-  </include>
+  <node name="rviz" pkg="rviz" type="rviz" respawn="false"
+        args="-d $(find record_trajectory)/launch/config.rviz"/>
 
 </launch>
